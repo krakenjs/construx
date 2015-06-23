@@ -17,9 +17,9 @@ The middleware compiler builds your dependencies as they are requested, allowing
 
 ```js
 var app = require('express')(),
-    devtools = require('construx');
+    construx = require('construx');
 
-app.use(devtools(/* src, dest [, config] */));
+app.use(construx(/* src, dest [, config] */));
 ```
 
 ### Parameters
