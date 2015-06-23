@@ -4,9 +4,9 @@
   "description": "A plugin-based development mode middleware for krakenjs",
   "main": "index.js",
   "scripts": {
-    "test": "nyc tap test/*.js && nyc report",
-    "cover": "nyc report --reporter=lcov",
-    "lint": "jshint -c .jshintrc index.js lib/ view/"
+    "test": "tap test/*.js",
+    "cover": "nyc npm test && nyc report",
+    "lint": "jshint -c .jshintrc index.js"
   },
   "repository": {
     "type": "git",
