@@ -20,41 +20,57 @@
 'use strict';
 
 
-var request = require('supertest'),
-    testutil = require('./util');
+var test = require('tape'),
+  request = require('supertest'),
+  testutil = require('./util'),
+  path = require('path');
 
+test('devtools', function (t) {
 
-describe('devtools', function () {
-
-
-    afterEach(function () {
-        testutil.cleanUp();
-    });
-
-
-    it('returns a middleware chain using an empty config', function (done) {
+    t.test('returns a middleware chain using an empty config', function (te) {
         var app = testutil.createApp();
 
         request(app)
-            .get('/')
-            .expect(200)
-            .end(done);
+          .get('/')
+          .expect(200, function (err) {
+              t.error(err);
+              testutil.cleanUp(t.end);
+          });
+
     });
 
-
-    it('returns a middleware chain using a non-empty config', function (done) {
+    t.test('returns a middleware chain using a non-empty config', function (t) {
         var app = testutil.createApp({
-            less: {
-                module: './plugins/less',
-                files: '/css/**/*.css'
+            copier: {
+                module: path.resolve(__dirname, 'plugins/copier'),
+                files: '**/*'
             }
         });
 
         request(app)
-            .get('/')
-            .expect(200)
-            .end(done);
+          .get('/')
+          .expect(200, function (err) {
+              t.error(err);
+              testutil.cleanUp(t.end);
+          });
     });
+    t.test('returns a middleware chain using a non-empty config', function (t) {
+        var app = testutil.createApp({
+            copier: {
+                module: path.resolve(__dirname, 'plugins/copier'),
+                files: '**/*'
+            },
+            dopier: {
+                module: path.resolve(__dirname, 'plugins/copier'),
+                files: '**/*'
+            }
+        });
 
-
+        request(app)
+          .get('/')
+          .expect(200, function (err) {
+              t.error(err);
+              testutil.cleanUp(t.end);
+          });
+    });
 });

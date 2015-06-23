@@ -1,18 +1,12 @@
-kraken-devtools
-===============
+construx
+========
 
-Lead Maintainer: [Matt Edelmann](https://github.com/grawk)  
+Lead Maintainer: [Matt Edelman](https://github.com/grawk)  
 
-[![Build Status](https://travis-ci.org/krakenjs/kraken-devtools.svg?branch=master)](https://travis-ci.org/krakenjs/kraken-devtools)  
-[![NPM version](https://badge.fury.io/js/kraken-devtools.png)](http://badge.fury.io/js/kraken-devtools)  
+[![Build Status](https://travis-ci.org/krakenjs/construx.svg?branch=master)](https://travis-ci.org/krakenjs/construx)  
+[![NPM version](https://badge.fury.io/js/construx.png)](http://badge.fury.io/js/construx)  
 
 Compile-on-the-fly and other development tools for use when building [express](http://expressjs.com/) applications.
-
-## Dependency considerations
-
-Without a great system for supporting optional peer dependencies, here are some minimum versions for using plugins shipped with `kraken-devtools`:
-
-1. `node-sass@^1.0.0`
 
 ## Middleware compiler
 
@@ -23,7 +17,7 @@ The middleware compiler builds your dependencies as they are requested, allowing
 
 ```js
 var app = require('express')(),
-    devtools = require('kraken-devtools');
+    devtools = require('construx');
 
 app.use(devtools(/* src, dest [, config] */));
 ```
@@ -38,19 +32,23 @@ app.use(devtools(/* src, dest [, config] */));
 
 ### Configuration
 
-`less`, `sass`, `stylus`, `dustjs`, and a static `copier` plugin are available to use. To enable, set the `module` and `files` properties in your `config`, e.g.:
+To enable a plugin, add it to the config object as follows:
 
 ```json
 {
     "less": {
-        "module": "kraken-devtools/plugins/less",
+        "module": "construx-less",
         "files": "/css/**/*.css",
         "ext": "less"
     }
 }
 ```
 
-To add additional compilers, create a module with the following format and add it to your configuration:
+_Note: above you also would have the `construx-less` construx plugin installed in your project_
+
+### Author a plugin
+
+Create a module with the following format and add it to your configuration:
 
 ```js
 module.exports = function (options) {
@@ -60,6 +58,8 @@ module.exports = function (options) {
 };
 ```
 
-### kraken-devtools-browserify
-Thanks to [iantocristian](http://github.com/iantocristian) we now have [browserify support for kraken-devtools](https://github.com/iantocristian/kraken-devtools-browserify)
+If you decide to publish your plugin for others to use, please consider using the naming convention `construx-<wrapped functionality>`
 
+### Existing plugins
+
+TBD

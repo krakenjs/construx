@@ -19,7 +19,8 @@
 
 
 var noop = require('./lib/noop'),
-    middleware = require('./lib/middleware');
+    middleware = require('./lib/middleware'),
+  debuglog = require('debuglog')('construx');
 
 
 module.exports = function (src, dest, config) {
@@ -41,6 +42,7 @@ module.exports = function (src, dest, config) {
 
             compiler = require(options.module)(options);
             handler = middleware(src, dest, options, compiler);
+            debuglog('registering %j as %j', options.module, name);
 
             // Create a middleware chain of each handler
             chain = (function (prev) {
