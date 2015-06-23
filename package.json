@@ -4,8 +4,8 @@
   "description": "A plugin-based development mode middleware for krakenjs",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js",
-    "cover": "istanbul cover tape -- test/*.js",
+    "test": "nyc tap test/*.js && nyc report",
+    "cover": "nyc report --reporter=lcov",
     "lint": "jshint -c .jshintrc index.js lib/ view/"
   },
   "repository": {
@@ -43,9 +43,9 @@
   },
   "devDependencies": {
     "express": "^3.4.0",
-    "istanbul": "~0.2.4",
     "jshint": "~2.4.3",
+    "nyc": "^2.3.0",
     "supertest": "^0.11.0",
-    "tape": "^4.0.0"
+    "tap": "^1.2.1"
   }
 }

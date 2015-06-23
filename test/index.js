@@ -20,21 +20,21 @@
 'use strict';
 
 
-var test = require('tape'),
+var test = require('tap').test,
   request = require('supertest'),
   testutil = require('./util'),
   path = require('path');
 
 test('devtools', function (t) {
 
-    t.test('returns a middleware chain using an empty config', function (te) {
+    t.test('returns a middleware chain using an empty config', function (t) {
         var app = testutil.createApp();
 
         request(app)
           .get('/')
           .expect(200, function (err) {
               t.error(err);
-              testutil.cleanUp(t.end);
+              testutil.cleanUp(t.end.bind(t));
           });
 
     });
@@ -51,26 +51,41 @@ test('devtools', function (t) {
           .get('/')
           .expect(200, function (err) {
               t.error(err);
-              testutil.cleanUp(t.end);
+              testutil.cleanUp(t.end.bind(t));
           });
     });
-    t.test('returns a middleware chain using a non-empty config', function (t) {
+    t.test('will exercise middleware for 200 result', function (t) {
         var app = testutil.createApp({
             copier: {
-                module: path.resolve(__dirname, 'plugins/copier'),
-                files: '**/*'
-            },
-            dopier: {
                 module: path.resolve(__dirname, 'plugins/copier'),
                 files: '**/*'
             }
         });
 
         request(app)
-          .get('/')
+          .get('/foo/')
           .expect(200, function (err) {
               t.error(err);
-              testutil.cleanUp(t.end);
+              testutil.cleanUp(t.end.bind(t));
+          });
+    });
+    t.test('will exercise middleware for 404 result', function (t) {
+        var app = testutil.createApp({
+            copier: {
+                module: path.resolve(__dirname, 'plugins/copier'),
+                files: '**/*'
+            }
+        });
+
+        request(app)
+          .get('/foo/bar')
+          .expect(404, function (err) {
+              t.error(err);
+              request(app).post('/foo/bar')
+                .expect(404, function (err) {
+                    t.error(err);
+                    testutil.cleanUp(t.end.bind(t));
+                });
           });
     });
 });
