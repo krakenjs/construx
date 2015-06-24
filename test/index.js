@@ -25,7 +25,7 @@ var test = require('tap').test,
   testutil = require('./util'),
   path = require('path');
 
-test('devtools', function (t) {
+test('construx', function (t) {
 
     t.test('returns a middleware chain using an empty config', function (t) {
         var app = testutil.createApp();
