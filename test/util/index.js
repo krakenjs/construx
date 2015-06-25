@@ -42,10 +42,11 @@ module.exports.createApp = function createApp(config) {
 };
 
 
-module.exports.cleanUp = function cleanUp() {
+module.exports.cleanUp = function cleanUp(cb) {
     rimraf(destRoot, function (err) {
         if (err) {
             // don't throw
         }
+        cb();
     });
 };

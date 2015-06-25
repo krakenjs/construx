@@ -1,14 +1,16 @@
 {
-  "name": "kraken-devtools",
-  "version": "1.2.2",
-  "description": "A development mode toolkit for kraken",
+  "name": "construx",
+  "version": "0.0.1",
+  "description": "A plugin-based development mode middleware for krakenjs",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "tap test/*.js",
+    "cover": "nyc npm test && nyc report",
+    "lint": "jshint -c .jshintrc index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/krakenjs/kraken-devtools.git"
+    "url": "https://github.com/krakenjs/construx.git"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -21,7 +23,8 @@
   "author": "Erik Toth <ertoth@paypal.com>",
   "contributors": [
     "Jean-Charles Sisk <jeancharles@paypal.com>",
-    "Jeff Harrell <jeharrell@paypal.com>"
+    "Jeff Harrell <jeharrell@paypal.com>",
+    "Matt Edelman <medelman@paypal.com>"
   ],
   "licenses": [
     {
@@ -39,17 +42,10 @@
     "rimraf": "^2.2.6"
   },
   "devDependencies": {
-    "dustjs-linkedin": "^2.3.4",
     "express": "^3.4.0",
-    "grunt": "^0.4.1",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-jshint": "^0.7.0",
-    "grunt-mocha-test": "^0.7.0",
-    "less": "^1.7.0",
-    "localizr": "^0.1.0",
-    "mocha": "^1.9.0",
-    "node-sass": "^2.1.1",
-    "stylus": "^0.43.0",
-    "supertest": "^0.10.0"
+    "jshint": "~2.4.3",
+    "nyc": "^2.3.0",
+    "supertest": "^0.11.0",
+    "tap": "^1.2.1"
   }
 }

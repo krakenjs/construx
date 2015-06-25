@@ -1,8 +1,3 @@
-##### v0.0.3 - 21092013
+##### v0.0.1
 
-**Bugs**
-- Fix error handling where `less` error object isn't actually an Error object.
-
-**Features**
-- None
-
+First release of plugin-based construx (supercedes https://github.com/krakenjs/kraken-devtools)
