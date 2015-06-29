@@ -13,7 +13,7 @@ Compile-on-the-fly and other development tools for use when building [express](h
 The middleware compiler builds your dependencies as they are requested, allowing you to run your express application as-is and not have to set up a watch task.
 
 
-### Usage
+### General Usage
 
 ```js
 var app = require('express')(),
@@ -46,20 +46,30 @@ To enable a plugin, add it to the config object as follows:
 
 _Note: above you also would have the `construx-less` construx plugin installed in your project_
 
-### Author a plugin
+### KrakenJS Usage
 
-Create a module with the following format and add it to your configuration:
-
-```js
-module.exports = function (options) {
-    return function (data, args, callback) {
-        // Compile the data
-    };
-};
-```
-
-If you decide to publish your plugin for others to use, please consider using the naming convention `construx-<wrapped functionality>`
+KrakenJS uses [confit]() and [meddleware]() to configure and manage middleware registration. To use `construx` as a
+krakenjs development tool, add the following to your application's `middleware` section in
 
 ### Existing plugins
 
-TBD
+Please rely upon the individual plugins' README for configuration and other requirements information.
+
+* [construx-copier](https://github.com/krakenjs/construx-copier/blob/master/README.md) - copier for static assets
+* [construx-dust](https://github.com/krakenjs/construx-dust/blob/master/README.md) - DustJS template compiler
+* [construx-less](https://github.com/krakenjs/construx-less/blob/master/README.md) - Less CSS compiler
+* [construx-sass](https://github.com/krakenjs/construx-sass/blob/master/README.md) - Sass CSS compiler
+* [construx-stylus](https://github.com/krakenjs/construx-stylus/blob/master/README.md) - TBD
+
+### Author a plugin
+
+We have created a template for construx plugins: [construx-star](https://github.com/krakenjs/construx-star). The template
+includes the basic pattern of a plugin, preferred unit test/coverage modules, preferred `npm run` aliases, and license (Apache 2.0).
+You can create a blank github repository and import `construx-star` as a starting point.
+
+* If you are developing a plugin as a 3rd party (i.e. not as a PayPal employee), please be sure to remove the PayPal specific license block
+at the top of each JavaScript file.
+* Please use the naming convention `construx-<wrapped compiler>`
+
+If you author and publish a `construx` plugin, please let us know so we can add it to our [existing plugins](#existing-plugins) list.
+
