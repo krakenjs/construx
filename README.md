@@ -48,9 +48,35 @@ _Note: above you also would have the `construx-less` construx plugin installed i
 
 ### KrakenJS Usage
 
-KrakenJS uses [confit]() and [meddleware]() to configure and manage middleware registration. To use `construx` as a
-krakenjs development tool, add the following to your application's `middleware` section in
+KrakenJS uses [confit](https://github.com/krakenjs/confit) and [meddleware](https://github.com/krakenjs/meddleware) to configure and manage middleware registration. To use `construx` as a
+krakenjs development tool, add the following to your application's `middleware` section in `development.json`
 
+```js
+"construx": {
+    "enabled": true,
+    "priority": 35,
+    "module": {
+        "name": "construx",
+        "arguments": [
+            "path:./public",
+            "path:./.build",
+            {
+                "css": {
+                    "module": "construx-less",
+                    "files": "/css/**/*.css"
+                },
+                "copier": {
+                    "module": "construx-copier",
+                    "files": "**/*"
+                }
+            }
+        ]
+    }
+}
+```
+
+This will engage the `construx` middleware only for the development environment. Note that the two configured plugins are as
+an example and your actual plugin set will depend upon your application.
 ### Existing plugins
 
 Please rely upon the individual plugins' README for configuration and other requirements information.
