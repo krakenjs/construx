@@ -85,7 +85,7 @@ Please rely upon the individual plugins' README for configuration and other requ
 * [construx-dust](https://github.com/krakenjs/construx-dust/blob/master/README.md) - DustJS template compiler
 * [construx-less](https://github.com/krakenjs/construx-less/blob/master/README.md) - Less CSS compiler
 * [construx-sass](https://github.com/krakenjs/construx-sass/blob/master/README.md) - Sass CSS compiler
-* [construx-stylus](https://github.com/krakenjs/construx-stylus/blob/master/README.md) - TBD
+* [construx-stylus](https://github.com/krakenjs/construx-stylus/blob/master/README.md) - Stylus CSS compiler
 
 ### Author a plugin
 
