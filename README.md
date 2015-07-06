@@ -87,6 +87,70 @@ Please rely upon the individual plugins' README for configuration and other requ
 * [construx-sass](https://github.com/krakenjs/construx-sass/blob/master/README.md) - Sass CSS compiler
 * [construx-stylus](https://github.com/krakenjs/construx-stylus/blob/master/README.md) - Stylus CSS compiler
 
+### How plugins work
+
+A plugin usually would wrap a build step for a particular technology. E.g. [construx-dustjs](https://github.com/krakenjs/construx-dustjs) 
+wraps the dustjs template compilation build step. This allows on-the-fly dust template changes to be reflected immediately during 
+development of your application. Other examples of plugins would be CSS compilers such as Less, Sass, or Stylus.
+
+#### Plugin registration
+
+```js
+{
+    "<plugin key>": {
+        "module": "<plugin module name>",
+        "files": "<filter on request path>",
+        "ext": "<file extension>"
+    }
+}
+```
+* `<plugin key>` just needs to be a unique string within the other registered plugins.
+* `module` is the npm package name of your plugin.
+* `files` is a glob string which will try and match the `req.path`. If there is a match, the plugin middleware will be engaged
+* `ext` is a replacement for the requested file's extension. E.g. if a `GET` request comes across for `/css/foo.css`, and `ext` is 
+set to `less`, the construx middleware will attempt to find a file named `<files source path>/foo.less`
+
+#### Middleware process a matched request
+
+When a `req.path` is matched to a plugin, construx middleware will open the matched file (using `fs.readFile`) and call that plugin's compiler:
+
+```js
+compiler(raw, config, function (err, result) {
+...
+```
+
+The `config` argument is:
+
+```js
+{
+    paths: dirs, 
+    context: context,
+    <options>
+}
+```
+* `paths` is an array of lookup paths based on the difference between the filesystem root of the current plugin's files and the 
+ currently requested file. E.g. if the request is for `/css/foo/bar/bang.css` the `paths` array will be: `['<root css path>/', 
+ '<root css path>/foo/', '<root css path>/foo/bar/']`. Use this array in your plugin according to need.
+* `context` is passed through all compile steps and its initial form is:
+
+```js
+context = {
+    srcRoot: <configured src root>,
+    destRoot: <configured dest root>,
+    filePath: <usually just req.path>,
+    name: <filePath minus file extension>,
+    ext: <options.ext, if set>
+};
+```
+
+You might use the context to pass stateful information from a preHook to your plugin (see elsewhere), or to flag construx middleware 
+about special conditions
+
+* `<options>` is the JSON object used to register the plugin (see #Plugin-registration above).
+
+The plugin's compiler will do whatever transformation to the raw buffer, and issue a `callback` to the construx middleware 
+with the transformed file (or an error).
+
 ### Author a plugin
 
 We have created a template for construx plugins: [construx-star](https://github.com/krakenjs/construx-star). The template
