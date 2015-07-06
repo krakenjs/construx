@@ -113,7 +113,8 @@ development of your application. Other examples of plugins would be CSS compiler
 set to `less`, the construx middleware will attempt to find a file named `<files source path>/foo.less`
 * `precompile` (optional) is a function that can run prior to the construx middleware execution for this plugin. Its signature is 
  `(context, callback)`. Please see description of compile `context` below.
-* `postcompile` (optional) is a function that will run post construx middleware execution for this plugin. Its signature is `(context, callback)`.
+* `postcompile` (optional) is a function that will run post construx middleware execution for this plugin. Its signature is `(context, callback)`. 
+A possible use case for `postcompile` would be if the plugin creates any temporary files/directories during compilation that should be deleted.
 
 #### Middleware process a matched request
 
