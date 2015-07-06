@@ -100,15 +100,20 @@ development of your application. Other examples of plugins would be CSS compiler
     "<plugin key>": {
         "module": "<plugin module name>",
         "files": "<filter on request path>",
-        "ext": "<file extension>"
+        "ext": "<file extension>",
+        "precompile": <Function>,
+        "postcompile": <Function>
     }
 }
 ```
 * `<plugin key>` just needs to be a unique string within the other registered plugins.
 * `module` is the npm package name of your plugin.
 * `files` is a glob string which will try and match the `req.path`. If there is a match, the plugin middleware will be engaged
-* `ext` is a replacement for the requested file's extension. E.g. if a `GET` request comes across for `/css/foo.css`, and `ext` is 
+* `ext` (optional) is a replacement for the requested file's extension. E.g. if a `GET` request comes across for `/css/foo.css`, and `ext` is 
 set to `less`, the construx middleware will attempt to find a file named `<files source path>/foo.less`
+* `precompile` (optional) is a function that can run prior to the construx middleware execution for this plugin. Its signature is 
+ `(context, callback)`. Please see description of compile `context` below.
+* `postcompile` (optional) is a function that will run post construx middleware execution for this plugin. Its signature is `(context, callback)`.
 
 #### Middleware process a matched request
 
@@ -143,13 +148,19 @@ context = {
 };
 ```
 
-You might use the context to pass stateful information from a preHook to your plugin (see elsewhere), or to flag construx middleware 
-about special conditions
+_Note: There are a couple possible overrides to the context object which you might want to take advantage of. See below._
 
 * `<options>` is the JSON object used to register the plugin (see #Plugin-registration above).
 
 The plugin's compiler will do whatever transformation to the raw buffer, and issue a `callback` to the construx middleware 
 with the transformed file (or an error).
+
+#### context overrides
+
+`srcPath`: If you want to compute the source file differently than the construx middleware, you can add `srcPath` to the 
+context object (in a `precompile` step usually) and the construx middleware will use your value instead of its own logic
+`skipRead`: If you don't want the construx middleware to open the source file (because for example, your compiler does that instead) 
+then set the `skipRead` flag to be true
 
 ### Author a plugin
 
