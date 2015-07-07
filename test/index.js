@@ -64,6 +64,7 @@ test('construx', function (t) {
 
         request(app)
           .get('/foo/')
+          .expect(/Hello/)
           .expect(200, function (err) {
               t.error(err);
               testutil.cleanUp(t.end.bind(t));
@@ -86,6 +87,46 @@ test('construx', function (t) {
                     t.error(err);
                     testutil.cleanUp(t.end.bind(t));
                 });
+          });
+    });
+    t.test('will honor the context.skipRead option', function (t) {
+        var app = testutil.createApp({
+            copier: {
+                module: path.resolve(__dirname, 'plugins/copier'),
+                files: '**/*',
+                precompile: function (options, cb) {
+                    options.skipRead = true;
+                    cb(null, options);
+                }
+            }
+        });
+
+        request(app)
+          .get('/foo/')
+          .expect(' ')
+          .expect(200, function (err) {
+              t.error(err);
+              testutil.cleanUp(t.end.bind(t));
+          });
+    });
+    t.test('will honor the context.srcPath option', function (t) {
+        var app = testutil.createApp({
+            copier: {
+                module: path.resolve(__dirname, 'plugins/copier'),
+                files: '**/*',
+                precompile: function (options, cb) {
+                    options.srcPath = path.resolve(__dirname, 'fixtures/public/bar/index.html');
+                    cb(null, options);
+                }
+            }
+        });
+
+        request(app)
+          .get('/foo/')
+          .expect(/Goodbye/)
+          .expect(200, function (err) {
+              t.error(err);
+              testutil.cleanUp(t.end.bind(t));
           });
     });
 });
