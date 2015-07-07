@@ -1,6 +1,6 @@
 {
   "name": "construx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A plugin-based development mode middleware for krakenjs",
   "main": "index.js",
   "scripts": {
