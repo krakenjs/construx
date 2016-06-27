@@ -36,16 +36,16 @@
     "async": "^0.2.7",
     "concat-stream": "^1.4.4",
     "debuglog": "^1.0.1",
-    "minimatch": "^0.2.14",
-    "mkdirp": "^0.3.5",
+    "minimatch": "^3.0.2",
+    "mkdirp": "^0.5.1",
     "n-deep-merge": "0.0.1",
     "rimraf": "^2.2.6"
   },
   "devDependencies": {
     "express": "^3.4.0",
-    "jshint": "~2.4.3",
-    "nyc": "^2.3.0",
+    "jshint": "^2.4.4",
+    "nyc": "^2.4.0",
     "supertest": "^0.11.0",
-    "tap": "^1.2.1"
+    "tap": "^5.8.0"
   }
 }
