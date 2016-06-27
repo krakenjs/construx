@@ -53,21 +53,19 @@ test('returns a middleware chain using a non-empty config', function(t) {
     });
 });
 test('will exercise middleware for 200 result', function(t) {
-var app = testutil.createApp({
-  copier: {
-    module: path.resolve(__dirname, 'plugins/copier'),
-    files: '**/*'
-  }
-});
-
-request(app)
-  .get('/foo/')
-  .expect(/Hello/)
-  .expect(200, function(err) {
-    t.error(err);
-    testutil.cleanUp(t.end);
+  var app = testutil.createApp({
+    copier: {
+      module: path.resolve(__dirname, 'plugins/copier'),
+      files: '**/*'
+    }
   });
-});
+  request(app)
+    .get('/foo/')
+    .expect(/Hello/)
+    .expect(200, function(err) {
+      t.error(err);
+      testutil.cleanUp(t.end);
+    });
 });
 test('will exercise middleware for 404 result', function(t) {
   var app = testutil.createApp({
