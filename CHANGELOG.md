@@ -1,4 +1,4 @@
-##### unreleased
+##### v1.0.1 
 
 * FIX: Update minimatch to 3.0.2 to resolve https://nodesecurity.io/advisories/118
 
