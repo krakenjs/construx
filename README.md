@@ -1,7 +1,4 @@
-construx
-========
-
-Lead Maintainer: [Matt Edelman](https://github.com/grawk)  
+# construx
 
 [![Build Status](https://travis-ci.org/krakenjs/construx.svg?branch=master)](https://travis-ci.org/krakenjs/construx)  
 [![NPM version](https://badge.fury.io/js/construx.png)](http://badge.fury.io/js/construx)  
@@ -89,8 +86,8 @@ Please rely upon the individual plugins' README for configuration and other requ
 
 ### How plugins work
 
-A plugin usually would wrap a build step for a particular technology. E.g. [construx-dustjs](https://github.com/krakenjs/construx-dustjs) 
-wraps the dustjs template compilation build step. This allows on-the-fly dust template changes to be reflected immediately during 
+A plugin usually would wrap a build step for a particular technology. E.g. [construx-dustjs](https://github.com/krakenjs/construx-dustjs)
+wraps the dustjs template compilation build step. This allows on-the-fly dust template changes to be reflected immediately during
 development of your application. Other examples of plugins would be CSS compilers such as Less, Sass, or Stylus.
 
 #### Plugin registration
@@ -109,11 +106,11 @@ development of your application. Other examples of plugins would be CSS compiler
 * `<plugin key>` just needs to be a unique string within the other registered plugins.
 * `module` is the npm package name of your plugin.
 * `files` is a glob string which will try and match the `req.path`. If there is a match, the plugin middleware will be engaged
-* `ext` (optional) is a replacement for the requested file's extension. E.g. if a `GET` request comes across for `/css/foo.css`, and `ext` is 
+* `ext` (optional) is a replacement for the requested file's extension. E.g. if a `GET` request comes across for `/css/foo.css`, and `ext` is
 set to `less`, the construx middleware will attempt to find a file named `<files source path>/foo.less`
-* `precompile` (optional) is a function that can run prior to the construx middleware execution for this plugin. Its signature is 
+* `precompile` (optional) is a function that can run prior to the construx middleware execution for this plugin. Its signature is
  `(context, callback)`. Please see description of compile `context` below.
-* `postcompile` (optional) is a function that will run post construx middleware execution for this plugin. Its signature is `(context, callback)`. 
+* `postcompile` (optional) is a function that will run post construx middleware execution for this plugin. Its signature is `(context, callback)`.
 A possible use case for `postcompile` would be if the plugin creates any temporary files/directories during compilation that should be deleted.
 
 #### Middleware process a matched request
@@ -129,13 +126,13 @@ The `config` argument is:
 
 ```js
 {
-    paths: dirs, 
+    paths: dirs,
     context: context,
     <options>
 }
 ```
-* `paths` is an array of lookup paths based on the difference between the filesystem root of the current plugin's files and the 
- currently requested file. E.g. if the request is for `/css/foo/bar/bang.css` the `paths` array will be: `['<root css path>/', 
+* `paths` is an array of lookup paths based on the difference between the filesystem root of the current plugin's files and the
+ currently requested file. E.g. if the request is for `/css/foo/bar/bang.css` the `paths` array will be: `['<root css path>/',
  '<root css path>/foo/', '<root css path>/foo/bar/']`. Use this array in your plugin according to need.
 * `context` is passed through all compile steps and its initial form is:
 
@@ -153,14 +150,14 @@ _Note: There are a couple possible overrides to the context object which you mig
 
 * `<options>` is the JSON object used to register the plugin (see #Plugin-registration above).
 
-The plugin's compiler will do whatever transformation to the raw buffer, and issue a `callback` to the construx middleware 
+The plugin's compiler will do whatever transformation to the raw buffer, and issue a `callback` to the construx middleware
 with the transformed file (or an error).
 
 #### context overrides
 
-`srcPath`: If you want to compute the source file differently than the construx middleware, you can add `srcPath` to the 
+`srcPath`: If you want to compute the source file differently than the construx middleware, you can add `srcPath` to the
 context object (in a `precompile` step usually) and the construx middleware will use your value instead of its own logic
-`skipRead`: If you don't want the construx middleware to open the source file (because for example, your compiler does that instead) 
+`skipRead`: If you don't want the construx middleware to open the source file (because for example, your compiler does that instead)
 then set the `skipRead` flag to be true
 
 ### Author a plugin
@@ -174,4 +171,3 @@ at the top of each JavaScript file.
 * Please use the naming convention `construx-<wrapped compiler>`
 
 If you author and publish a `construx` plugin, please let us know so we can add it to our [existing plugins](#existing-plugins) list.
-
